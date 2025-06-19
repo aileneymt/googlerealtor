@@ -1,0 +1,426 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Google Sans', 'Arial', sans-serif; /* Prioritize Google Sans if available, then Arial */
+  overflow: hidden; /* Prevent scrolling if map is full screen */
+  background-color: #f0f2f5; /* Fallback background, though map covers most */
+}
+
+/* Ensure the root and App components fill the screen */
+#root, .App, .start-page-container {
+  height: 100vh; /* Viewport height */
+  width: 100vw; /* Viewport width */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent content overflowing beyond the viewport */
+}
+
+.header-left {
+  background: rgb(66, 134, 244); /* translucent dark blue */
+  color: white;
+  backdrop-filter: blur(8px); /* gives it a frosted glass effect */
+  border-bottom: 1px rgb(66, 134, 244);
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+}
+
+.header-link {
+  text-decoration: none;
+  color: rgb(66, 134, 244); /* Google blue */
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.header-link:hover {
+  background-color: #e8eaed; /* Light grey on hover */
+}
+
+/* Map Background Container */
+.map-background {
+  height: 100vh; /* 🔥 This makes it fill the entire screen height */
+  width: 100vw;
+  background-size: cover;
+  filter: brightness(0.90) blur(1px);
+  opacity: 0.85;
+  background-repeat: no-repeat;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 12px 18px;
+  border-radius: 20px;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: break-word;
+  margin-bottom: 12px;
+}
+
+/* User message: aligned right */
+.user {
+  background-color: rgb(144, 187, 255);
+  color: black;
+  align-self: flex-end; /* right align */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 5px;
+}
+
+/* Bot message: aligned left */
+.bot {
+  background-color: #e0e0e0;
+  color: black;
+  align-self: flex-start; /* left align */
+  border-top-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 20px;
+}
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* base align left, overridden by user */
+  width: 100%;
+  gap: 10px;
+  max-height: 300px; /* or whatever height you want */
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+
+.chat-messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages-container::-webkit-scrollbar-thumb {
+  background-color: white; /* 🤍 white thumb */
+  border-radius: 6px;
+  border: 2px solid rgba(66, 134, 244, 1); /* Google blue background shows through = inset look */
+  background-clip: content-box; /* keeps it thin and inset */
+}
+
+.chat-messages-container::-webkit-scrollbar-track {
+  background-color: transparent; /* or rgba(255,255,255,0.1) if you want subtle contrast */
+}
+
+.chat-messages-container {
+  scrollbar-color: rgba(0, 0, 0, 0.3);
+  scrollbar-width: 4px;
+}
+
+/* Chat Bot */
+.chat-bot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(66, 134, 244, 1); /* Google blue */
+  color: white;
+  align-self: center;
+  padding: 30px 40px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgb(255, 255, 255);
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  max-height: 50vh;
+  overflow: auto;
+  height: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome Overlay */
+.welcome-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(66, 134, 244); /* Google blue */
+  color: white;
+  padding: 60px 40px; /* Increased horizontal padding slightly */
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgb(255, 255, 255);
+  z-index: 10; /* Ensure it's above query bubbles and map */
+  max-width: 700px; /* Limit width */
+  box-sizing: border-box;
+}
+
+.welcome-overlay h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.search-bar {
+  background-color: white; 
+  border-radius: 25px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: right;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgb(255, 255, 255);
+}
+
+.search-input {
+  background-color: white;
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 1rem;
+  color: #1c1c1c; /* Darker grey for input text */
+}
+
+.search-input::placeholder {
+  background-color: white;
+  color: #9ea3a8; /* Lighter grey for placeholder */
+}
+
+.search-button {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.search-icon {
+  color: #5f6368; /* Google grey */
+  font-size: 1.3rem; /* Slightly larger icon */
+}
+
+/* Query Bubbles Styling */
+.query-bubble1 {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  background-color: rgba(255, 255, 255, 1); 
+  color: white;
+  z-index: 5; /* Below the main overlay */
+  width: 28%; /* Roughly estimated width */
+  max-width: 400px; /* Prevent bubbles from getting too wide */
+  box-sizing: border-box;
+  padding: 10px; /* Padding for the group */
+  border-radius: 10px; /*curve edges */
+}
+
+.query-bubble2 {
+  position: absolute;
+  top: 170px;
+  left: 900px;
+  background-color: white; /* Google blue with transparency */
+  color: rgb(100, 100, 100);
+  z-index: 5; /* Below the main overlay */
+  width: 28%; /* Roughly estimated width */
+  max-width: 400px; /* Prevent bubbles from getting too wide */
+  box-sizing: border-box;
+  padding: 10px; /* Padding for the group */
+  border-radius: 10px; /*curve edges */
+}
+
+.query-bubble3 {
+  position: absolute;
+  top: 700px;
+  left: 20px;
+  background-color: white; /* Google blue with transparency */
+  color: rgb(100, 100, 100);
+  z-index: 5; /* Below the main overlay */
+  width: 28%; /* Roughly estimated width */
+  max-width: 400px; /* Prevent bubbles from getting too wide */
+  box-sizing: border-box;
+  padding: 10px; /* Padding for the group */
+  border-radius: 10px; /*curve edges */
+}
+
+.query-bubble4 {
+  position: absolute;
+  top: 800px;
+  left: 700px;
+  background-color: white; /* Google blue with transparency */
+  color: rgb(100, 100, 100);
+  z-index: 5; /* Below the main overlay */
+  width: 28%; /* Roughly estimated width */
+  max-width: 400px; /* Prevent bubbles from getting too wide */
+  box-sizing: border-box;
+  padding: 10px; /* Padding for the group */
+  border-radius: 10px; /*curve edges */
+}
+
+.query-bubble5 {
+  position: absolute;
+  top: 550px;
+  left: 1300px;
+  background-color: white; /* Google blue with transparency */
+  color: rgb(100, 100, 100);
+  z-index: 5; /* Below the main overlay */
+  width: 28%; /* Roughly estimated width */
+  max-width: 400px; /* Prevent bubbles from getting too wide */
+  box-sizing: border-box;
+  padding: 10px; /* Padding for the group */
+  border-radius: 10px; /*curve edges */
+}
+
+
+.query-bubble .search-icon-small {
+  color: white;
+  font-size: 1.1rem; /* Slightly smaller than main search icon */
+  cursor: pointer;
+  margin-left: 600px; /* Space between text and icon */
+}
+
+@media (max-width: 900px) {
+  .welcome-overlay h1 {
+    font-size: 1.7rem;
+  }
+  .welcome-overlay {
+    padding: 30px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    display: none; /* Hide navigation links on small screens */
+  }
+  .header-left {
+    width: 100%;
+    text-align: center;
+  }
+  .welcome-overlay {
+    width: 90%;
+    padding: 20px;
+  }
+  .welcome-overlay h1 {
+    font-size: 1.5rem;
+  }
+  .start-page-container {
+      overflow-y: auto; /* Allow scrolling on smaller screens */
+  }
+}
+
+.pop-bubble {
+  animation: popInOut 5s ease-in-out infinite;
+  color: "#fff8e1";
+  background-color: white;
+  position: absolute;
+  z-index: 5;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 250px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@keyframes popInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.00);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.00);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+.search-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.google-search-box {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 30px;
+  padding: 12px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.fade-in {
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-input-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.chat-input-form {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  gap: 8px;
+}
+
+.chat-input-form input {
+  flex: 1;
+  height: 20px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 10px 0 0 10px;
+  border: 1px solid #ccc;
+}
+
+.chat-input-form button {
+  height: 20px;
+  padding: 0 20px;
+  background-color: #4285F4;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+}
+
+.chat-input-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

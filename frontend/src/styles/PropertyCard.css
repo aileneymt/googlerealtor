@@ -1,0 +1,196 @@
+.property-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  padding-right: 0px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-right: 0px;
+  min-width: 200px;
+  max-width: 90%;
+  margin-left: auto;
+  font-family: 'Google Sans', 'Arial', sans-serif; /* Prioritize Google Sans if available, then Arial */
+  height: 100vh;       /* limit height to 80% of viewport */
+  overflow-y: auto;       /* vertical scroll when needed */
+}
+
+.house-list-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  padding-right: 0px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-right: 0px;
+  min-width: 20%;
+  width: fit-content;
+  margin-left: auto;
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;       /* limit height to 80% of viewport */
+  overflow-y: auto;       /* vertical scroll when needed */
+  padding-bottom: 100px;
+}
+
+.property-img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+
+.property-address {
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #000
+}
+
+.property-price {
+  font-size: 1.5rem;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.property-details {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.property-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.property-icons p {
+  margin: 6px 0;
+  color: #555
+}
+
+.nearby-search {
+  margin-top: 20px;
+  color: #000;
+}
+
+.search-input {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.search-input input {
+  flex: 1;
+  padding: 10px 15px;
+  font-style: italic;
+  border-radius: 25px 0 0 25px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.search-input button {
+  padding: 0 16px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+}
+
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-grid button {
+  background: #4285F4;
+  color: #F1F3F4;
+  padding: 8px 14px;
+  border-radius: 25px;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+
+.tag-grid button:hover {
+  background-color: #3367d6; /* darker blue on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tag-grid span:hover {
+  background: #ddd;
+}
+
+.future-predictions {
+    margin-top: 20px;
+    color: #000
+}
+
+.mock-graph {
+  width: 300px;
+  height: 200px;
+  object-fit: cover; /* crop to fill without distortion */
+}
+
+h3{
+  padding: 0px;
+  margin: 0px;
+  text-align: left
+}
+
+.toggles {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  gap: 5px;
+  input {
+    max-width: 100px;
+  }
+  
+  
+}
+.option {
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+  padding: 0px;
+  max-height: 250px;
+}
+
+.street-view {
+  margin: 5px;
+  padding: 5px;
+}
+
+#search-button {
+ margin: 5px;
+ padding: 5px;
+ margin-left: auto;
+}
+
+.graph {
+  margin-top: 20px;
+  width: 90%;
+  margin-bottom: 30px
+}
+
+.demographics-section {
+  padding: 20px 0;
+}
+
+.subsection {
+  color: #174EA6;
+}
+
+.placesButton {
+  background-color: rgb(255, 186, 59) !important;
+  color: black !important;
+}

@@ -1,0 +1,4 @@
+readme
+
+Command to create sql dump file:
+./mysqldump.exe -h 127.0.0.1 -P 3305 -u realtoruser -p --column-statistics=0 -r googlerealtor > "C:/full/path/to/googlerealtor2_dump.sql"

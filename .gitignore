@@ -1,0 +1,27 @@
+# Node.js
+/frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.DS_Store
+
+# Python
+/api/venv/
+api/*.pyc
+api/*.pyo
+api/*.pyd
+api/__pycache__/
+api/.env
+api/rdu-*.json
+api/.DS_Store
+
+# General
+.vscode/
+*.log
+*.env
+*.DS_Store
+*.py[cod]
+__pycache__/
+*.swp
+
+# database
+/database/data
